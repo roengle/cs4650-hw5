@@ -39,7 +39,7 @@ def get_wordnet_pos(word):
     return tag_dict.get(tag, wordnet.NOUN)
 
 
-# In[29]:
+# In[31]:
 
 
 nlp = spacy.load('en_core_web_lg')
@@ -53,7 +53,7 @@ one_month_ago_str = (today - relativedelta(months=1) + relativedelta(days=1)).st
 words = []
 
 for i in range(1,6):
-    data = newsapi.get_everything(q='coronavirus', language='en', from_param='2022-02-28', to='2020-03-27', sort_by='relevancy', page=i)
+    data = newsapi.get_everything(q='coronavirus', language='en', from_param= one_month_ago_str, to=today_str, sort_by='relevancy', page=i)
 
     articles = data['articles']
 
@@ -75,7 +75,7 @@ words = [w for w in words if w not in stopwords.words('english')]
 words = [WordNetLemmatizer().lemmatize(w, get_wordnet_pos(w)) for w in words]
 
 
-# In[30]:
+# In[32]:
 
 
 # import wordcloud library
@@ -89,3 +89,7 @@ wordcloud = WordCloud(width = 1000, height = 500).generate(unique_string)
 wordcloud.to_file("word_cloud.png")
 
 
+# In[33]:
+
+
+print(words)
